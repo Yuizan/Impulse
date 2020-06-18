@@ -18,13 +18,13 @@ public class CommandController {
         return commandService.getId();
     }
 
-    @PutMapping("/thread/{activeThread}")
-    public String setThread(@PathVariable int activeThread){
-        return commandService.setThread(activeThread);
-    }
-
-    @PutMapping("/capacity/{times}")
-    public String capacity(@PathVariable int times){
-        return commandService.capacity(times);
-    }
+//    @PutMapping("/thread/{activeThread}")
+//    public String setThread(@PathVariable int activeThread){
+//        return commandService.setThread(activeThread);
+//    }
+//
+//    @PutMapping("/capacity/{times}")
+//    public String capacity(@PathVariable int times){
+//        return commandService.capacity(times);
+//    }
 }
