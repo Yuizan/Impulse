@@ -24,7 +24,7 @@ class ImpulseApplicationTests {
             executor.execute(()->{
                 try {
                     countDownLatch.await();
-                    System.out.println(commandServiceImpl.getId());
+                    commandServiceImpl.getId();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

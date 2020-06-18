@@ -1,9 +1,12 @@
 package com.yifan.impulse.service.impl;
 
 import com.yifan.impulse.common.init.InitConfig;
+import com.yifan.impulse.common.init.SnowflakeInit;
 import com.yifan.impulse.config.ImpulseAutoConfiguration;
 import com.yifan.impulse.constans.ImpulseConst;
 import com.yifan.impulse.service.CommandService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
@@ -17,14 +20,19 @@ import java.util.concurrent.locks.ReentrantLock;
 @Service
 public class CommandServiceImpl implements CommandService {
 
+    private static final Logger logger = LoggerFactory.getLogger(CommandServiceImpl.class);
+
     private ImpulseConst impulseConst;
     private InitConfig initConfig;
     private ImpulseAutoConfiguration impulseAutoConfiguration;
+    private SnowflakeInit snowflakeInit;
 
-    public CommandServiceImpl(ImpulseConst impulseConst, InitConfig initConfig, ImpulseAutoConfiguration impulseAutoConfiguration){
+    public CommandServiceImpl(ImpulseConst impulseConst, InitConfig initConfig,
+                              ImpulseAutoConfiguration impulseAutoConfiguration, SnowflakeInit snowflakeInit){
         this.impulseConst = impulseConst;
         this.initConfig = initConfig;
         this.impulseAutoConfiguration = impulseAutoConfiguration;
+        this.snowflakeInit = snowflakeInit;
     }
 
     @Override
@@ -49,11 +57,18 @@ public class CommandServiceImpl implements CommandService {
             if(impulseConst.getIsStartingThread().get()){
                 Thread.yield();
             }else{
+
                 id = impulseConst.getImpulses().poll();
                 if(id != null){
                     break;
                 }
             }
+        }
+        if(id == null){
+            id = snowflakeInit.getId();
+            logger.info("cannot get id from queue, [{}]", id);
+        }else{
+            logger.info("get id [{}] from queue", id);
         }
         return id;
     }

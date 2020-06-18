@@ -38,7 +38,7 @@ public class ImpulseAutoConfiguration implements ApplicationListener<ContextRefr
                     }
                     Long id = snowflakeInit.getId();
                     impulseConst.getImpulses().add(id);
-                    logger.info(id + "");
+                    logger.info("add: [{}] into queue", id);
                 }
             });
             impulseConst.getThreads().add(thread);
