@@ -1,21 +1,30 @@
 package com.yifan.impulse.service.impl;
 
 import com.yifan.impulse.common.init.InitConfig;
+import com.yifan.impulse.config.ImpulseAutoConfiguration;
 import com.yifan.impulse.constans.ImpulseConst;
 import com.yifan.impulse.service.CommandService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.LockSupport;
+import java.util.concurrent.locks.ReentrantLock;
 
 @Service
 public class CommandServiceImpl implements CommandService {
 
     private ImpulseConst impulseConst;
     private InitConfig initConfig;
+    private ImpulseAutoConfiguration impulseAutoConfiguration;
 
-    public CommandServiceImpl(ImpulseConst impulseConst, InitConfig initConfig){
+    public CommandServiceImpl(ImpulseConst impulseConst, InitConfig initConfig, ImpulseAutoConfiguration impulseAutoConfiguration){
         this.impulseConst = impulseConst;
         this.initConfig = initConfig;
+        this.impulseAutoConfiguration = impulseAutoConfiguration;
     }
 
     @Override
@@ -48,4 +57,5 @@ public class CommandServiceImpl implements CommandService {
         }
         return id;
     }
+
 }

@@ -32,4 +32,8 @@ public class InitConfig {
     public double getGenerateRatio() {
         return generateRatio;
     }
+
+    public void setMaxSize(int maxSize) {
+        this.maxSize = maxSize;
+    }
 }

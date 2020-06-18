@@ -3,6 +3,8 @@ package com.yifan.impulse.config;
 import com.yifan.impulse.common.init.InitConfig;
 import com.yifan.impulse.common.init.SnowflakeInit;
 import com.yifan.impulse.constans.ImpulseConst;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -17,6 +19,7 @@ public class ImpulseAutoConfiguration implements ApplicationListener<ContextRefr
     private SnowflakeInit snowflakeInit;
     private ImpulseConst impulseConst;
     private InitConfig initConfig;
+    private static final Logger logger = LoggerFactory.getLogger(ImpulseAutoConfiguration.class);
 
     public ImpulseAutoConfiguration(SnowflakeInit snowflakeInit, ImpulseConst impulseConst, InitConfig initConfig){
         this.snowflakeInit = snowflakeInit;
@@ -33,7 +36,9 @@ public class ImpulseAutoConfiguration implements ApplicationListener<ContextRefr
                         impulseConst.getIsFull().set(true);
                         LockSupport.park(this);
                     }
-                    impulseConst.getImpulses().add(snowflakeInit.getId());
+                    Long id = snowflakeInit.getId();
+                    impulseConst.getImpulses().add(id);
+                    logger.info(id + "");
                 }
             });
             impulseConst.getThreads().add(thread);

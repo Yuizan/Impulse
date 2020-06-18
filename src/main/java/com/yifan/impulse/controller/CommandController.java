@@ -1,10 +1,10 @@
 package com.yifan.impulse.controller;
 
 import com.yifan.impulse.service.CommandService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/command")
 public class CommandController {
 
     private CommandService commandService;
@@ -18,4 +18,13 @@ public class CommandController {
         return commandService.getId();
     }
 
+    @PutMapping("/thread/{activeThread}")
+    public String setThread(@PathVariable int activeThread){
+        return commandService.setThread(activeThread);
+    }
+
+    @PutMapping("/capacity/{times}")
+    public String capacity(@PathVariable int times){
+        return commandService.capacity(times);
+    }
 }

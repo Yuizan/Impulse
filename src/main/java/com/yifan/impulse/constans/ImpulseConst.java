@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @Component
 public class ImpulseConst {
 
-    private List<Thread> threads = new LinkedList<>();
+    private LinkedList<Thread> threads = new LinkedList<>();
     private Queue<Long> impulses = new LinkedBlockingQueue<>();
     private AtomicBoolean isFull = new AtomicBoolean(false);
     private AtomicBoolean isStartingThread = new AtomicBoolean(false);
@@ -24,7 +24,7 @@ public class ImpulseConst {
         return isStartingThread;
     }
 
-    public List<Thread> getThreads() {
+    public LinkedList<Thread> getThreads() {
         return threads;
     }
 
